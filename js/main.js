@@ -1,6 +1,20 @@
 var str = `
 /*
  * 画一只皮卡丘给你看
+ */
+.wrapper{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50%;
+	background: #FFE600;
+}
+.pikachu-wrapper{
+	width: 318px;
+	height: 180px;
+	position: relative;
+}
+/*
  * 先画皮卡丘的眼睛
  */
 .eye{

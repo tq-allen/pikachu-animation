@@ -9,18 +9,7 @@ body{
 	flex-direction: column;
 	height: 100vh;
 }
-.wrapper{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 50%;
-	background: #FFE600;
-}
-.pikachu-wrapper{
-	width: 318px;
-	height: 180px;
-	position: relative;
-}
+
 
 #code{
 	height: 50%;
