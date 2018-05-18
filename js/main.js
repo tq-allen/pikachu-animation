@@ -1,5 +1,19 @@
-var str = `
-/*
+!function(){
+	function writeCode(code){
+		let codePre = document.querySelector('#code')
+		let styleTag = document.querySelector('#styleTag')
+		var n = 0
+		var id = setInterval(function(){
+			n ++
+			codePre.innerHTML = Prism.highlight(code.substring(0,n), Prism.languages.css, 'css');
+			codePre.scrollTop = codePre.scrollHeight
+			styleTag.innerHTML = code.substring(0,n)
+			if(n >= code.length){
+				clearInterval(id)
+			}
+		},10)
+	}
+	var str = `/*
  * 画一只皮卡丘给你看
  */
 .wrapper{
@@ -155,14 +169,6 @@ var str = `
 /*
  * 现在，这只皮卡丘画完了，送给你
  */`
-
-var n = 0
-var id = setInterval(function(){
-	n ++
-	code.innerHTML = Prism.highlight(str.substring(0,n), Prism.languages.css, 'css');
-	code.scrollTop = code.scrollHeight
-	styleTag.innerHTML = str.substring(0,n)
-	if(n >= str.length){
-		clearInterval(id)
-	}
-},10)	
+	
+	writeCode(str)
+}()
