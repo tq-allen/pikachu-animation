@@ -1,19 +1,70 @@
 !function(){
-	function writeCode(code){
-		let codePre = document.querySelector('#code')
-		let styleTag = document.querySelector('#styleTag')
-		var n = 0
-		var id = setInterval(function(){
-			n ++
-			codePre.innerHTML = Prism.highlight(code.substring(0,n), Prism.languages.css, 'css');
-			codePre.scrollTop = codePre.scrollHeight
-			styleTag.innerHTML = code.substring(0,n)
-			if(n >= code.length){
-				clearInterval(id)
+	// 初始(默认)速度
+	let duration = 50
+	let id
+	let codePre = document.querySelector('#code')
+	let styleTag = document.querySelector('#styleTag')
+
+	// 控制速度
+	let actions = document.querySelector('.actions')
+	let actionsBtn = document.querySelectorAll('.actions button')
+	actionsBtn.forEach((item)=>{
+		item.onclick = function(e){
+			actionsBtn.forEach(item=>{
+				item.classList.remove('active')
+			})
+			e.currentTarget.classList.add('active')
+			let speed = e.currentTarget.getAttribute('data-speed')
+			switch(speed){
+				case 'slow':
+					duration = 100
+					break
+				case 'normal':
+					duration = 50
+					break
+				case 'fast':
+					duration = 10
+					break
+				case 'to-end':
+					clearTimeout(id)
+					writeMain(str)
+					break
+
 			}
-		},10)
+		}
+	})
+
+
+	function writeCode(code){
+		var n = 0
+		//setInterval无法改变速度
+		// var id = setInterval(function(){
+		// 	n ++
+		// 	codePre.innerHTML = Prism.highlight(code.substring(0,n), Prism.languages.css, 'css');
+		// 	codePre.scrollTop = codePre.scrollHeight
+		// 	styleTag.innerHTML = code.substring(0,n)
+		// 	if(n >= code.length){
+		// 		clearInterval(id)
+		// 	}
+		// },10)
+
+		// 用setTimeout递归来模拟setInterval
+		id = setTimeout(function run(){
+			n ++
+			writeMain(code.substring(0,n))
+			if(n < code.length){
+				id = setTimeout(run, duration)
+			}
+		}, duration)
 	}
-	var str = `/*
+
+	function writeMain(code){
+		codePre.innerHTML = Prism.highlight(code, Prism.languages.css, 'css')
+		codePre.scrollTop = codePre.scrollHeight
+		styleTag.innerHTML = code
+	}
+
+	let str = `/*
  * 画一只皮卡丘给你看
  */
 .wrapper{
@@ -172,3 +223,4 @@
 	
 	writeCode(str)
 }()
+
