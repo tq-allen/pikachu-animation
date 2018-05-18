@@ -159,7 +159,7 @@ var str = `
 var n = 0
 var id = setInterval(function(){
 	n ++
-	code.innerHTML = str.substring(0,n)
+	code.innerHTML = Prism.highlight(str.substring(0,n), Prism.languages.css, 'css');
 	code.scrollTop = code.scrollHeight
 	styleTag.innerHTML = str.substring(0,n)
 	if(n >= str.length){
